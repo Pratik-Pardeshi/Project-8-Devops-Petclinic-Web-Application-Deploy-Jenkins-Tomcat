@@ -44,12 +44,6 @@ pipeline {
             }
         }
         
-        stage("TRIVY") {
-            steps {
-                sh "trivy image pratikp02i/pet-clinic123:latest"
-            }
-        }
-        
         stage("Deploy To Tomcat") {
             steps {
                 sh "cp /var/lib/jenkins/workspace/CI-CD/target/petclinic.war /opt/apache-tomcat-9.0.91/webapps/"
