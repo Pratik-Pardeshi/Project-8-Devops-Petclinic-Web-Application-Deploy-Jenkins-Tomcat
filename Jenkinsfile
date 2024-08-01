@@ -28,7 +28,7 @@ pipeline {
         
         stage("Build") {
             steps {
-                sh "mvn clean install"
+                sh "mvn clean package"
             }
         }
         
@@ -46,7 +46,14 @@ pipeline {
         
         stage("Deploy To Tomcat") {
             steps {
-                sh "cp /var/lib/jenkins/workspace/CI-CD/target/petclinic.war /opt/apache-tomcat-9.0.91/webapps/"
+                script {
+                    def warFile = "/var/lib/jenkins/workspace/${env.JOB_NAME}/target/petclinic.war"
+                    if (fileExists(warFile)) {
+                        sh "cp ${warFile} /opt/apache-tomcat-9.0.91/webapps/"
+                    } else {
+                        error "WAR file not found at ${warFile}"
+                    }
+                }
             }
         }
     }
