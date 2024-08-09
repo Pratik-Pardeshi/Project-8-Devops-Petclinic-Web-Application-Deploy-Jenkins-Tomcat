@@ -49,7 +49,7 @@ pipeline {
                 script {
                     def warFile = "/var/lib/jenkins/workspace/${env.JOB_NAME}/target/petclinic.war"
                     if (fileExists(warFile)) {
-                        sh "cp ${warFile} /opt/apache-tomcat-9.0.91/webapps/"
+                        sh "cp ${warFile} /opt/apache-tomcat-9.0.93/webapps/"
                     } else {
                         error "WAR file not found at ${warFile}"
                     }
